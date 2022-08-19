@@ -9,24 +9,21 @@ public class LockedMeMain {
 		String dirname = "/tmp/user/java/bin";
 		File d = new File(dirname);
 		d.mkdir();
+		Sleeper s = new Sleeper();
 		Scanner sc = new Scanner(System.in);
 		int mainOption = 0;
 		System.out.println("Welcome to LockedMe");
 		System.out.println("Developed By Shane Messmer");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-		System.out.println("========================");
+		s.sleeps();
+		System.out.println("==========================================================================");
 		while (mainOption != 3) {
 			System.out.println("Main Menu:");
 			System.out.println("Input the number of the action you would like to take...");
-			System.out.println("========================");
+			System.out.println("==========================================================================");
 			System.out.println("1. Show all files in the directory.");
 			System.out.println("2. Show file options");
 			System.out.println("3. Quit the application");
-			System.out.println("========================");
+			System.out.println("==========================================================================");
 
 			boolean inputInvalid = true;
 			do {
@@ -43,15 +40,15 @@ public class LockedMeMain {
 			if (mainOption == 2) {
 				int fileMenuOption = 0;
 				while (fileMenuOption != 4) {
-					System.out.println("========================");
+					System.out.println("==========================================================================");
 					System.out.println("File Menu");
 					System.out.println("Input the number of the action you would like to take...");
-					System.out.println("========================");
+					System.out.println("==========================================================================");
 					System.out.println("1. Add File");
 					System.out.println("2. Delete File");
 					System.out.println("3. Search For File");
 					System.out.println("4. Main Menu");
-					System.out.println("========================");
+					System.out.println("==========================================================================");
 					boolean inputInvalid1 = true;
 					do {
 						try {
@@ -70,20 +67,17 @@ public class LockedMeMain {
 
 						String fileName = sc.next();
 						File newFile = new File(dirname + "/" + fileName);
-						try {
-							newFile.createNewFile();
-							System.out.println("The file " + fileName + " has been created!");
+						if (newFile.exists()) {
+							System.out.println("File not created! File name already in use!");
+							s.sleeps();
+						} else {
 							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
-						} catch (IOException e) {
-							System.out.println("File name format not permitted, please try again.");
-							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
+								newFile.createNewFile();
+								System.out.println("The file " + fileName + " has been created!");
+								s.sleeps();
+							} catch (IOException e) {
+								System.out.println("File name format not permitted, please try again.");
+								s.sleeps();
 							}
 						}
 
@@ -94,19 +88,11 @@ public class LockedMeMain {
 						if (thisFile.exists()) {
 							thisFile.delete();
 							System.out.println("File deleted");
-							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
+							s.sleeps();
 
 						} else {
 							System.out.println("No File exists by that name");
-							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
+							s.sleeps();
 						}
 					} else if (fileMenuOption == 3) {
 						System.out.println("What is the name of the file you are looking for?");
@@ -116,52 +102,37 @@ public class LockedMeMain {
 							System.out.println("This file exists");
 							System.out.println("File name: " + thisFile1.getName());
 							System.out.println("File path: " + thisFile1.getPath());
-							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
+							s.sleeps();
 						} else {
 							System.out.println("This file does not exist");
-							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
+							s.sleeps();
 						}
 					} else {
 						System.out.println("Please enter a number that corresponds to a menu action...");
-						try {
-							Thread.sleep(3000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+						s.sleeps();
 					}
 
 				}
 
 			} else if (mainOption == 1) {
 				String[] files = d.list();
-				System.out.println("========================");
+				System.out.println("==========================================================================");
 				System.out.println("All files in the directory are printed below");
-				System.out.println("========================");
+				System.out.println("==========================================================================");
 				for (int i = 0; i < files.length; i++) {
 
 					System.out.println(files[i]);
 
 				}
-				System.out.println("========================");
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
+				System.out.println("==========================================================================");
+				s.sleeps();
 
 			} else if (mainOption == 3) {
 				System.out.println("Goodbye!");
 				break;
 			} else {
 				System.out.println("Please enter a number that corresponds to a menu action...");
+				s.sleeps();
 			}
 
 		}
